@@ -1,0 +1,9 @@
+.medium-editor {
+  height: 100px;
+  border: 1px solid #888888;
+  margin-top: 50px;
+
+  &::after {
+    margin-top: 0;
+  }
+}

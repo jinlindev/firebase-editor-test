@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "firebase-editor"
+    }
+  },
+  "defaultProject": "firebase-editor",
+  "cli": {
+    "analytics": false
+  }
 }

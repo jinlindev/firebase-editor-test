@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import MediumEditor from 'medium-editor';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { extractMath } from 'extract-math';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class HomeComponent implements OnInit {
   editor: MediumEditor;
   user;
+  content = '';
 
   constructor(
     public authService: AuthService,
@@ -29,7 +31,8 @@ export class HomeComponent implements OnInit {
         });
         this.db.collection('users').doc(res.uid).get().subscribe(user => {
           if (user && user.data() && user.data().content && this.editor) {
-            this.editor.setContent(user.data().content);
+            this.content = user.data().content;
+            this.editor.setContent(this.content);
           }
         });
       }
@@ -58,6 +61,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.editor.subscribe('editableInput', (event, editable: Element) => {
+      this.content = event.target.innerHTML;
       if (this.user) {
         this.db.collection('users').doc(this.user.uid).update({
           content: event.target.innerHTML

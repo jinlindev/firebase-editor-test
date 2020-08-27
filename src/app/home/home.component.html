@@ -3,3 +3,10 @@
 </button>
 
 <div class="medium-editor"></div>
+
+<div class="katex-content">
+  <ng-container *ngFor="let s of (content | segments)">
+    <p *ngIf="!s.math" [innerHTML]="s.value" [class.d-block]="s.value === '</p>' || (s.value.includes('<p>') && s.value.includes('</p>'))">{{s.value}}</p>
+    <ng-katex [equation]="s.value" *ngIf="s.math"></ng-katex>
+  </ng-container>
+</div>
